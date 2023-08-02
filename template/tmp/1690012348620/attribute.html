@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial;
+      }
+
+      .red-underline {
+        color: #482683;
+        text-decoration: underline;
+      }
+
+      a {
+        color: #482683;
+        text-decoration: none;
+        background-color: transparent;
+      }
+      ::placeholder {
+        color: #848383;
+        opacity: 1;
+      }
+
+      /* Add Bootstrap classes to the tab */
+      .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+        padding: 10px;
+      }
+
+      /* Add Bootstrap classes to the buttons */
+      .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+      }
+
+      /* Add Material CSS class to change background color on hover */
+      .tab button:hover {
+        background-color: #ddd;
+      }
+
+      /* Add Material CSS class to the active button */
+      .tab button.active {
+        background-color: #ccc;
+      }
+      @media only screen and (min-width: 993px) {
+        .container {
+          width: 100%;
+        }
+      }
+
+      /* Add Bootstrap classes to the tab content */
+      .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+      }
+      .container {
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      .select-label {
+        font-size: 24px;
+        font-weight: 500;
+      }
+
+      .select {
+        width: 400px;
+      }
+
+      table {
+        margin-top: 3%;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+
+      #records_table {
+        width: 100%;
+      }
+
+      #records_table td,
+      #records_table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      #records_table tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      #records_table tr:hover {
+        background-color: #ddd;
+      }
+
+      #records_table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #482683;
+        color: white;
+      }
+
+      a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+
+      .previous,
+      .next {
+        background-color: #482683;
+        color: white;
+        border-radius: 50%;
+        padding: 8px 16px;
+      }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      const limit = 10;
+      var totatEventIds = [];
+      var response = [{"_id":"misp_attr_285313","id":285313,"event_id":"1502","object_id":"0","object_relation":null,"category":"Antivirus detection","type":"text","to_ids":false,"uuid":"5a539683-8754-4cca-a975-33450a016219","timestamp":"1515427459","distribution":"5","sharing_group_id":"0","comment":"JavaScript backdoor","deleted":false,"disable_correlation":"false","first_seen":null,"last_seen":null,"value":"JS/Agent.NWB","Event":{"org_id":"1","distribution":"3","id":"1502","info":"Turla: Mosquito Whitepaper","orgc_id":"8","uuid":"5a5395d1-40a0-45fc-b692-334a0a016219"},"__v":0},{"_id":"misp_attr_285314","id":285314,"event_id":"1502","object_id":"0","object_relation":null,"category":"Antivirus detection","type":"text","to_ids":false,"uuid":"5a539683-ecc4-4bdc-97d8-33450a016219","timestamp":"1515427459","distribution":"5","sharing_group_id":"0","comment":"JavaScript backdoor","deleted":false,"disable_correlation":"false","first_seen":null,"last_seen":null,"value":"JS/TrojanDownloader.Agent.REG","Event":{"org_id":"1","distribution":"3","id":"1502","info":"Turla: Mosquito Whitepaper","orgc_id":"8","uuid":"5a5395d1-40a0-45fc-b692-334a0a016219"},"__v":0},{"_id":"misp_attr_285312","id":285312,"event_id":"1502","object_id":"0","object_relation":null,"category":"Antivirus detection","type":"text","to_ids":false,"uuid":"5a539670-03c4-4a1c-b1f3-34430a016219","timestamp":"1515427440","distribution":"5","sharing_group_id":"0","comment":"Older variants","deleted":false,"disable_correlation":"false","first_seen":null,"last_seen":null,"value":"Win32/TrojanDownloader.DMU","Event":{"org_id":"1","distribution":"3","id":"1502","info":"Turla: Mosquito Whitepaper","orgc_id":"8","uuid":"5a5395d1-40a0-45fc-b692-334a0a016219"},"__v":0},{"_id":"misp_attr_285311","id":285311,"event_id":"1502","object_id":"0","object_relation":null,"category":"Antivirus detection","type":"text","to_ids":false,"uuid":"5a539670-f048-4717-835b-34430a016219","timestamp":"1515427440","distribution":"5","sharing_group_id":"0","comment":"Older variants","deleted":false,"disable_correlation":"false","first_seen":null,"last_seen":null,"value":"Win32/TrojanDownloader.CAM","Event":{"org_id":"1","distribution":"3","id":"1502","info":"Turla: Mosquito Whitepaper","orgc_id":"8","uuid":"5a5395d1-40a0-45fc-b692-334a0a016219"},"__v":0},{"_id":"misp_attr_285304","id":285304,"event_id":"1502","object_id":"0","object_relation":null,"category":"Antivirus detection","type":"text","to_ids":false,"uuid":"5a539660-779c-4d7e-95fb-2fc50a016219","timestamp":"1515427424","distribution":"5","sharing_group_id":"0","comment":"Recent samples","deleted":false,"disable_correlation":"false","first_seen":null,"last_seen":null,"value":"Win32/Turla.CR","Event":{"org_id":"1","distribution":"3","id":"1502","info":"Turla: Mosquito Whitepaper","orgc_id":"8","uuid":"5a5395d1-40a0-45fc-b692-334a0a016219"},"__v":0},{"_id":"misp_attr_285303","id":285303,"event_id":"1502","object_id":"0","object_relation":null,"category":"Antivirus detection","type":"text","to_ids":false,"uuid":"5a539660-e3c4-4ea9-a5d9-2fc50a016219","timestamp":"1515427424","distribution":"5","sharing_group_id":"0","comment":"Recent samples","deleted":false,"disable_correlation":"false","first_seen":null,"last_seen":null,"value":"Win32/Turla.CP","Event":{"org_id":"1","distribution":"3","id":"1502","info":"Turla: Mosquito Whitepaper","orgc_id":"8","uuid":"5a5395d1-40a0-45fc-b692-334a0a016219"},"__v":0},{"_id":"misp_attr_285305","id":285305,"event_id":"1502","object_id":"0","object_relation":null,"category":"Antivirus detection","type":"text","to_ids":false,"uuid":"5a539660-43c8-4d02-89b6-2fc50a016219","timestamp":"1515427424","distribution":"5","sharing_group_id":"0","comment":"Recent samples","deleted":false,"disable_correlation":"false","first_seen":null,"last_seen":null,"value":"Win32/Turla.CS","Event":{"org_id":"1","distribution":"3","id":"1502","info":"Turla: Mosquito Whitepaper","orgc_id":"8","uuid":"5a5395d1-40a0-45fc-b692-334a0a016219"},"__v":0},{"_id":"misp_attr_285306","id":285306,"event_id":"1502","object_id":"0","object_relation":null,"category":"Antivirus detection","type":"text","to_ids":false,"uuid":"5a539660-a2d4-4bf1-ad7f-2fc50a016219","timestamp":"1515427424","distribution":"5","sharing_group_id":"0","comment":"Recent samples","deleted":false,"disable_correlation":"false","first_seen":null,"last_seen":null,"value":"Win32/Turla.CT","Event":{"org_id":"1","distribution":"3","id":"1502","info":"Turla: Mosquito Whitepaper","orgc_id":"8","uuid":"5a5395d1-40a0-45fc-b692-334a0a016219"},"__v":0},{"_id":"misp_attr_285307","id":285307,"event_id":"1502","object_id":"0","object_relation":null,"category":"Antivirus detection","type":"text","to_ids":false,"uuid":"5a539660-7500-4d5d-8c05-2fc50a016219","timestamp":"1515427424","distribution":"5","sharing_group_id":"0","comment":"Recent samples","deleted":false,"disable_correlation":"false","first_seen":null,"last_seen":null,"value":"Win32/Turla.CU","Event":{"org_id":"1","distribution":"3","id":"1502","info":"Turla: Mosquito Whitepaper","orgc_id":"8","uuid":"5a5395d1-40a0-45fc-b692-334a0a016219"},"__v":0},{"_id":"misp_attr_285308","id":285308,"event_id":"1502","object_id":"0","object_relation":null,"category":"Antivirus detection","type":"text","to_ids":false,"uuid":"5a539660-daf8-4527-8686-2fc50a016219","timestamp":"1515427424","distribution":"5","sharing_group_id":"0","comment":"Recent samples","deleted":false,"disable_correlation":"false","first_seen":null,"last_seen":null,"value":"Win32/Turla.CV","Event":{"org_id":"1","distribution":"3","id":"1502","info":"Turla: Mosquito Whitepaper","orgc_id":"8","uuid":"5a5395d1-40a0-45fc-b692-334a0a016219"},"__v":0},{"_id":"misp_attr_285309","id":285309,"event_id":"1502","object_id":"0","object_relation":null,"category":"Antivirus detection","type":"text","to_ids":false,"uuid":"5a539660-88c8-44e2-8ac7-2fc50a016219","timestamp":"1515427424","distribution":"5","sharing_group_id":"0","comment":"Recent samples","deleted":false,"disable_correlation":"false","first_seen":null,"last_seen":null,"value":"Win32/Turla.CW","Event":{"org_id":"1","distribution":"3","id":"1502","info":"Turla: Mosquito Whitepaper","orgc_id":"8","uuid":"5a5395d1-40a0-45fc-b692-334a0a016219"},"__v":0},{"_id":"misp_attr_285310","id":285310,"event_id":"1502","object_id":"0","object_relation":null,"category":"Antivirus detection","type":"text","to_ids":false,"uuid":"5a539660-922c-4dac-b3a8-2fc50a016219","timestamp":"1515427424","distribution":"5","sharing_group_id":"0","comment":"Recent samples","deleted":false,"disable_correlation":"false","first_seen":null,"last_seen":null,"value":"Win32/Turla.CX","Event":{"org_id":"1","distribution":"3","id":"1502","info":"Turla: Mosquito Whitepaper","orgc_id":"8","uuid":"5a5395d1-40a0-45fc-b692-334a0a016219"},"__v":0},{"_id":"misp_attr_285302","id":285302,"event_id":"1502","object_id":"0","object_relation":null,"category":"Antivirus detection","type":"text","to_ids":false,"uuid":"5a539660-c628-4a9c-9535-2fc50a016219","timestamp":"1515427424","distribution":"5","sharing_group_id":"0","comment":"Recent samples","deleted":false,"disable_correlation":"false","first_seen":null,"last_seen":null,"value":"Win32/Turla.CQ","Event":{"org_id":"1","distribution":"3","id":"1502","info":"Turla: Mosquito Whitepaper","orgc_id":"8","uuid":"5a5395d1-40a0-45fc-b692-334a0a016219"},"__v":0}];
+      var updateEventTable = function () {
+        var trHTML = "";
+        response.map(function (item) {
+          trHTML +=
+            '<tr class="removeable"><td>' +
+            item.event_id +
+            "</td><td>" +
+            item.category +
+            "</td><td>" +
+            item.type +
+            "</td><td>" +
+            new Date(parseInt(item.timestamp * 1000)).getFullYear() +
+            "/" +
+            (new Date(parseInt(item.timestamp * 1000)).getMonth() + 1) +
+            "/" +
+            new Date(parseInt(item.timestamp * 1000)).getDate() +
+            " " +
+            new Date(parseInt(item.timestamp * 1000)).getHours() +
+            ":" +
+            new Date(parseInt(item.timestamp * 1000)).getMinutes() +
+            ":" +
+            new Date(parseInt(item.timestamp * 1000)).getSeconds() +
+            "</td><td>" +
+            item.comment +
+            "</td><td>" +
+            item.value +
+            "</td></tr>";
+        });
+
+        if (response.length > 0) {
+          //page += 1;
+          $(".removeable").remove();
+          $("#records_table").append(trHTML);
+        }
+      };
+
+      $(document).ready(function () {
+        updateEventTable();
+      });
+    </script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h2 class="text-center">
+            <span class="red-underline"
+              >Unified <span style="color: #482683">T</span>hreat
+              <span style="color: #482683">I</span>ntelligence</span
+            >
+          </h2>
+        </div>
+      </div>
+
+      <h2 class="text-center" style="color: #000; margin-bottom: 20px">
+        Attribute Report
+      </h2>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label id="domain-label" class="select-label">Domain - Insurance</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label id="category-label" class="select-label"
+              >Category - Antivirus detection</label
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <table id="records_table" class="table">
+          <thead>
+            <tr style="background-color: #482683;color: #fff;">
+              <th>Event ID</th>
+              <th>Category</th>
+              <th>Type</th>
+              <th>Timestamp</th>
+              <th>Comment</th>
+              <th>Reference</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

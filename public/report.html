@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- JQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Font css -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+
+    <!-- ChartJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.bundle.js"></script>
+
+    <!-- MomentJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <!-- Moment Timezone -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.27/moment-timezone-with-data.min.js"></script>
+
+    <title>New Devices</title>
+  </head>
+
+  <script>
+    (function ($) {
+      $.dragScroll = function (options) {
+        var settings = $.extend(
+          {
+            scrollVertical: true,
+            scrollHorizontal: true,
+            cursor: null,
+          },
+          options
+        );
+
+        var clicked = false,
+          clickY,
+          clickX;
+
+        var getCursor = function () {
+          if (settings.cursor) return settings.cursor;
+          if (settings.scrollVertical && settings.scrollHorizontal)
+            return "move";
+          if (settings.scrollVertical) return "row-resize";
+          if (settings.scrollHorizontal) return "col-resize";
+        };
+
+        var updateScrollPos = function (e, el) {
+          $("html").css("cursor", getCursor());
+          var $el = $(el);
+          settings.scrollVertical &&
+            $el.scrollTop($el.scrollTop() + (clickY - e.pageY));
+          settings.scrollHorizontal &&
+            $el.scrollLeft($el.scrollLeft() + (clickX - e.pageX));
+        };
+
+        $("html").css("cursor", "grab");
+
+        $(document).on({
+          mousemove: function (e) {
+            clicked && updateScrollPos(e, this);
+          },
+          mousedown: function (e) {
+            clicked = true;
+            clickY = e.pageY;
+            clickX = e.pageX;
+          },
+          mouseup: function () {
+            clicked = false;
+            $("html").css("cursor", "grab");
+          },
+        });
+      };
+    })(jQuery);
+
+    $.dragScroll();
+
+    angular
+      .module("email-template-2", [])
+      .controller("TemplateController", function ($scope, $http, $window) {
+        var data = {
+            categories : [
+              "Africa",
+              "Asia",
+              "Europe",
+              "Latin America",
+              "North America",
+            ],
+            data:[2478, 5267, 734, 784, 433]
+        }
+        var colorArray = [
+          "#FF6633",
+          "#FFB399",
+          "#FF33FF",
+          "#FFFF99",
+          "#00B3E6",
+          "#E6B333",
+          "#3366E6",
+          "#999966",
+          "#99FF99",
+          "#B34D4D",
+          "#80B300",
+          "#809900",
+          "#E6B3B3",
+          "#6680B3",
+          "#66991A",
+          "#FF99E6",
+          "#CCFF1A",
+          "#FF1A66",
+          "#E6331A",
+          "#33FFCC",
+          "#66994D",
+          "#B366CC",
+          "#4D8000",
+          "#B33300",
+          "#CC80CC",
+          "#66664D",
+          "#991AFF",
+          "#E666FF",
+          "#4DB3FF",
+          "#1AB399",
+          "#E666B3",
+          "#33991A",
+          "#CC9999",
+          "#B3B31A",
+          "#00E680",
+          "#4D8066",
+          "#809980",
+          "#E6FF80",
+          "#1AFF33",
+          "#999933",
+          "#FF3380",
+          "#CCCC00",
+          "#66E64D",
+          "#4D80CC",
+          "#9900B3",
+          "#E64D66",
+          "#4DB380",
+          "#FF4D4D",
+          "#99E6E6",
+          "#6666FF",
+        ];
+        const color = [];
+        for(var idx=0;idx<data["data"].length;idx++){
+            color.push(colorArray[(Math.floor(
+                Math.random() * colorArray.length))]);
+        }
+        new Chart(document.getElementById("donut-chart"), {
+          type: "pie",
+          data: {
+            labels: data['categories'],
+            datasets: [
+              {
+                label: "Categories (events)",
+                backgroundColor: color,
+                data: data['data'],
+              },
+            ],
+          },
+          options: {
+            title: {
+              display: true,
+              text: "Categories stats based on event occurance",
+            },
+          },
+        });
+      });
+  </script>
+
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      padding: 0px 40px;
+      min-width: 1000px;
+
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    body::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-break {
+      page-break-inside: avoid;
+    }
+
+    .comp-logo {
+      width: 350px;
+      margin-bottom: 15px;
+    }
+
+    .comp-icon-head {
+      width: 23px;
+    }
+
+    .light-text {
+      color: #a8a9ad;
+    }
+
+    .dark-text {
+      color: #808285;
+    }
+
+    p {
+      margin-bottom: 5px;
+      color: #808285;
+    }
+
+    .chart-bar {
+      height: 20px;
+      background-color: #808285;
+    }
+
+    .chart-lines {
+      display: flex;
+    }
+
+    .chart-lines div {
+      height: 100%;
+      border-right: 2px solid rgba(228, 228, 228, 0.4);
+    }
+
+    .chart-line-container {
+      position: absolute;
+      width: calc(100% - 30px);
+      height: calc(100% + 10px);
+    }
+
+    .template-chart {
+      margin-bottom: 20px;
+    }
+
+    .fixed-width-col {
+      flex: 0 0 60px;
+    }
+
+    .report-head-border {
+      border-bottom: 2px solid rgba(182, 182, 182, 0.8);
+      margin-bottom: 40px;
+    }
+
+    .rpt-txt-wrap {
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .font-weight-bold {
+      font-weight: 600 !important;
+    }
+  </style>
+
+  <body ng-app="email-template-2" ng-controller="TemplateController">
+    <div class="container-fluid">
+      <div
+        class="row pb-4 template-head report-head-border"
+        style="margin-top: 45px"
+      >
+        <div class="col-8 pl-0">
+          <!--img src="{{logoURL}}" alt="Company LOGO" class="comp-logo"-->
+          <h3 class="m-0">Executive Report</h3>
+        </div>
+        <div class="col-4">
+          <h3 class="m-0"></h3>
+          <h6
+            class="font-weight-bold pb-2 pt-3 dark-text"
+            style="position: relative; float: right"
+          >
+           Executive Report
+          </h6>
+          <!-- <h6 class="mb-0 light-text">Reporting Period</h6>
+                <h6 class="font-weight-bold mb-0 dark-text">{{fromdate}} -
+                    {{todate}}</h6> -->
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-12">
+          <div class="row no-gutters">
+            <div class="col-12">
+              <canvas width="800" height="450" id="donut-chart"></canvas>
+            </div>
+            <div class="col-12">
+              <table
+                style="
+                  margin: auto;
+                  width: 50%;
+                  border: 3px solid green;
+                  padding: 10px;
+                  margin-top: 10px;
+                "
+              >
+                <tr>
+                  <th>Company</th>
+                  <th>Contact</th>
+                  <th>Country</th>
+                </tr>
+                <tr>
+                  <td>Alfreds Futterkiste</td>
+                  <td>Maria Anders</td>
+                  <td>Germany</td>
+                </tr>
+                <tr>
+                  <td>Centro comercial Moctezuma</td>
+                  <td>Francisco Chang</td>
+                  <td>Mexico</td>
+                </tr>
+                <tr>
+                  <td>Ernst Handel</td>
+                  <td>Roland Mendel</td>
+                  <td>Austria</td>
+                </tr>
+                <tr>
+                  <td>Island Trading</td>
+                  <td>Helen Bennett</td>
+                  <td>UK</td>
+                </tr>
+                <tr>
+                  <td>Laughing Bacchus Winecellars</td>
+                  <td>Yoshi Tannamuri</td>
+                  <td>Canada</td>
+                </tr>
+                <tr>
+                  <td>Magazzini Alimentari Riuniti</td>
+                  <td>Giovanni Rovelli</td>
+                  <td>Italy</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

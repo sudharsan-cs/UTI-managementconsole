@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- JQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Font css -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+  font-family: Arial;
+}
+
+.red-underline {
+  color: #482683;
+  text-decoration: underline;
+}
+
+a {
+  color: #482683;
+  text-decoration: none;
+  background-color: transparent;
+}::placeholder { 
+  color: #848383;
+  opacity: 1; 
+}
+
+/* Add Bootstrap classes to the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  padding: 10px;
+}
+
+/* Add Bootstrap classes to the buttons */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Add Material CSS class to change background color on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Add Material CSS class to the active button */
+.tab button.active {
+  background-color: #ccc;
+}
+@media only screen and (min-width: 993px) {
+  .container {
+    width: 100%;
+  }
+}
+
+/* Add Bootstrap classes to the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+.container {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+      #records_table {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      #records_table td,
+      #records_table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      #records_table tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      #records_table tr:hover {
+        background-color: #ddd;
+      }
+
+      #records_table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #482683;
+        color: white;
+      }
+    </style>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+
+    <!-- ChartJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.bundle.js"></script>
+
+    <!-- MomentJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+    <!-- Moment Timezone -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.27/moment-timezone-with-data.min.js"></script>
+
+    <title>Executive Report</title>
+  </head>
+
+  <script>
+    $(document).ready(function () {
+      const response = {"categories":["External analysis","Artifacts dropped","Other","Attribution","Internal reference","Financial fraud","Antivirus detection","Network activity"],"data":[22151,8936,20087,368,23,180,313,364416]};
+      var trHTML = "";
+
+      $.each(response["categories"], function (i, item) {
+        trHTML +=
+          '<tr class="removeable"><td>' +
+          (i + 1) +
+          "</td> <td>" +
+          item +
+          "</td> <td>" +
+          response["data"][i];
+        ("</td></tr>");
+      });
+
+      if (response["categories"].length > 0) {
+        //page += 1;
+        $(".removeable").remove();
+        $("#records_table").append(trHTML);
+      }
+    });
+    (function ($) {
+      $.dragScroll = function (options) {
+        var settings = $.extend(
+          {
+            scrollVertical: true,
+            scrollHorizontal: true,
+            cursor: null,
+          },
+          options
+        );
+
+        var clicked = false,
+          clickY,
+          clickX;
+
+        var getCursor = function () {
+          if (settings.cursor) return settings.cursor;
+          if (settings.scrollVertical && settings.scrollHorizontal)
+            return "move";
+          if (settings.scrollVertical) return "row-resize";
+          if (settings.scrollHorizontal) return "col-resize";
+        };
+
+        var updateScrollPos = function (e, el) {
+          $("html").css("cursor", getCursor());
+          var $el = $(el);
+          settings.scrollVertical &&
+            $el.scrollTop($el.scrollTop() + (clickY - e.pageY));
+          settings.scrollHorizontal &&
+            $el.scrollLeft($el.scrollLeft() + (clickX - e.pageX));
+        };
+
+        $("html").css("cursor", "grab");
+
+        $(document).on({
+          mousemove: function (e) {
+            clicked && updateScrollPos(e, this);
+          },
+          mousedown: function (e) {
+            clicked = true;
+            clickY = e.pageY;
+            clickX = e.pageX;
+          },
+          mouseup: function () {
+            clicked = false;
+            $("html").css("cursor", "grab");
+          },
+        });
+      };
+    })(jQuery);
+
+    $.dragScroll();
+
+    angular
+      .module("email-template-2", [])
+      .controller("TemplateController", function ($scope, $http, $window) {
+        const data = {"categories":["External analysis","Artifacts dropped","Other","Attribution","Internal reference","Financial fraud","Antivirus detection","Network activity"],"data":[22151,8936,20087,368,23,180,313,364416]};
+        var colorArray = [
+          "#FF6633",
+          "#FFB399",
+          "#FF33FF",
+          "#FFFF99",
+          "#00B3E6",
+          "#E6B333",
+          "#3366E6",
+          "#999966",
+          "#99FF99",
+          "#B34D4D",
+          "#80B300",
+          "#809900",
+          "#E6B3B3",
+          "#6680B3",
+          "#66991A",
+          "#FF99E6",
+          "#CCFF1A",
+          "#FF1A66",
+          "#E6331A",
+          "#33FFCC",
+          "#66994D",
+          "#B366CC",
+          "#4D8000",
+          "#B33300",
+          "#CC80CC",
+          "#66664D",
+          "#991AFF",
+          "#E666FF",
+          "#4DB3FF",
+          "#1AB399",
+          "#E666B3",
+          "#33991A",
+          "#CC9999",
+          "#B3B31A",
+          "#00E680",
+          "#4D8066",
+          "#809980",
+          "#E6FF80",
+          "#1AFF33",
+          "#999933",
+          "#FF3380",
+          "#CCCC00",
+          "#66E64D",
+          "#4D80CC",
+          "#9900B3",
+          "#E64D66",
+          "#4DB380",
+          "#FF4D4D",
+          "#99E6E6",
+          "#6666FF",
+        ];
+        const color = [];
+        for (var idx = 0; idx < data["data"].length; idx++) {
+          color.push(colorArray[Math.floor(Math.random() * colorArray.length)]);
+        }
+        new Chart(document.getElementById("donut-chart"), {
+          type: "pie",
+          data: {
+            labels: data["categories"],
+            datasets: [
+              {
+                label: "Categories (events)",
+                backgroundColor: color,
+                data: data["data"],
+              },
+            ],
+          },
+          options: {
+            title: {
+              display: true,
+              text: "Categories stats based on event occurance",
+            },
+          },
+        });
+      });
+  </script>
+
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      padding: 0px 40px;
+      min-width: 1000px;
+
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    body::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-break {
+      page-break-inside: avoid;
+    }
+
+    .comp-logo {
+      width: 350px;
+      margin-bottom: 15px;
+    }
+
+    .comp-icon-head {
+      width: 23px;
+    }
+
+    .light-text {
+      color: #a8a9ad;
+    }
+
+    .dark-text {
+      color: #808285;
+    }
+
+    p {
+      margin-bottom: 5px;
+      color: #808285;
+    }
+
+    .chart-bar {
+      height: 20px;
+      background-color: #808285;
+    }
+
+    .chart-lines {
+      display: flex;
+    }
+
+    .chart-lines div {
+      height: 100%;
+      border-right: 2px solid rgba(228, 228, 228, 0.4);
+    }
+
+    .chart-line-container {
+      position: absolute;
+      width: calc(100% - 30px);
+      height: calc(100% + 10px);
+    }
+
+    .template-chart {
+      margin-bottom: 20px;
+    }
+
+    .fixed-width-col {
+      flex: 0 0 60px;
+    }
+
+    .report-head-border {
+      border-bottom: 2px solid rgba(182, 182, 182, 0.8);
+      margin-bottom: 40px;
+    }
+
+    .rpt-txt-wrap {
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .font-weight-bold {
+      font-weight: 600 !important;
+    }
+  </style>
+<body ng-app="email-template-2" ng-controller="TemplateController">
+  <div class="container">
+    <div class="row">
+
+        <div class="col">
+          <h2 class="text-center red-underline"> <u></u><span style="color: #482683">U</span>nified  <span style="color: #482683">T</span>hreat  <span style="color: #482683">I</span>ntelligence</h2></u></h2>
+        </div>
+
+    </div>
+    <div class="row"></div>
+  <h2 class="text-center" style="color: #000; margin-bottom: 20px">
+    Executive Report
+  </h2>
+  <div class="row">
+    
+      <div class="form-group">
+        <h2 id="domain-label" class="select-label">Domain - Insurance</h2>
+      
+    </div>
+  </div>
+  <div class="row">
+  <canvas width="800" height="650" id="donut-chart"></canvas>
+  </div>
+  <div class="row">
+  <table  class="table table-bordered mt-4">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Category</th>
+        <th>Event Count</th>
+      </tr>
+    </thead>
+<tbody id="records_table">
+
+</tbody>
+  </table>
+  </div>
+</div> 
+</body>
+
+</html>

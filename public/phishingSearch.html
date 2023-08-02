@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="scripts/phishingInfoSearch.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="css/malwaredrilldown.css" />
+    <style>
+      .container-div {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container"style="width: 100%;">
+      <div class="search-container">
+        <input
+          style="height: 20%"
+          id="searchbox"
+          type="text"
+          placeholder="Search for phishing url"
+          name="search"
+        />
+        <button id="search"><i class="fa fa-search"></i></button>
+      </div>
+      <div class="table-container">
+        <table id="records_table" border="1">
+          <tr style="background-color: #482683;color: #fff;">
+            <th style="">Phishing URL</th>
+          </tr>
+        </table>
+      </div>
+      <div class="pagination-container">
+        <a href="#" id="previousTable" class="previous">&#8249;</a>
+        <a href="#" id="nextTable" class="next">&#8250;</a>
+      </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="css/index.css" />
+  </head>
+  <body onload="loadPage(event, 'mitreMalware')">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h2 class="text-center red-underline"> <u></u><span style="color: #482683">U</span>nified  <span style="color: #482683">T</span>hreat  <span style="color: #482683">I</span>ntelligence</h2></u></h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="tab">
+            <button class="tablinks" onclick="loadPage(event, 'mitreMalware')">
+              Malware Search 
+            </button>
+            <button class="tablinks" onclick="loadPage(event, 'Events')">
+              Search by Domain 
+             </button>
+            <button class="tablinks" onclick="loadPage(event, 'Malware')">
+             Search by File details
+            </button>
+            <button class="tablinks" onclick="loadPage(event, 'IoC')">
+              Search by IoC
+            </button>
+            <button class="tablinks" onclick="loadPage(event, 'Phishing')">
+              PhishVault
+            </button>
+            <button class="tablinks" onclick="loadPage(event, 'Phishing Search')">
+              PhishSpotter
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div id="mitreMalware" class="tabcontent">
+            <iframe
+              src="mitremalware.html"
+              height="750px"
+              width="100%"
+              title="Iframe Example"
+            ></iframe>
+          </div>
+          <div id="IoC" class="tabcontent">
+            <iframe
+              src="ioc.html"
+              height="750px"
+              width="100%"
+              title="Iframe Example"
+            ></iframe>
+          </div>
+          <div id="Malware" class="tabcontent">
+            <iframe
+              src="malware.html"
+              height="750px"
+              width="100%"
+              title="Iframe Example"
+            ></iframe>
+          </div>
+          <div id="Events" class="tabcontent">
+            <iframe
+              src="events.html"
+              height="750px"
+              width="100%"
+              title="Iframe Example"
+            ></iframe>
+          </div>
+          <div id="Phishing" class="tabcontent">
+            <iframe
+              src="phishingInfo.html"
+              height="750px"
+              width="100%"
+              title="Iframe Example"
+            ></iframe>
+          </div>
+          <div id="Phishing Search" class="tabcontent">
+            <iframe
+              src="phishingSearch.html"
+              height="750px"
+              width="100%"
+              title="Iframe Example"
+            ></iframe>
+          </div>
+        </div>
+        
+      </div>
+      <footer class="footer">
+        <div class="row">
+          <div class="col text-center">
+            <p>&copy; 2023 . All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Include Bootstrap and Material CSS JavaScript files -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Your existing JavaScript code -->
+    <script src="scripts/index.js"></script>
+  </body>
+</html>

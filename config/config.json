@@ -1,0 +1,56 @@
+{
+  "server": {
+    "ipaddress": "0.0.0.0",
+    "port": 3000
+  },
+  "misp":{
+    "apiKey":"kzgYjZ0Kixa1YI0J7kBxN6od0C9jFM24RhszxqWS",
+    "eventURL":"https://localhost/events/restSearch",
+    "eventCntURL":"https://localhost/events/restSearch/count",
+    "attributeURL":"https://localhost/attributes/restSearch",
+    "attributeCntURL":"https://localhost/attributes/restSearch/count",
+    "eventPayload":{"page": "${page#}", "limit": "${limit#}" }
+  },
+  "domain":{
+    "Insurance": [
+      "Antivirus detection",
+      "Artifacts dropped",
+      "Attribution",
+      "External analysis" ,
+      "Financial fraud" ,
+      "Internal reference" ,
+      "Network activity",
+      "Other" 
+    ],
+    "Finance": [
+      "Payload delivery",
+      "Payload installation",
+      "Payload type" ,
+      "Persistence mechanism" ,
+      "Person" ,
+      "Social network" ,
+      "Support Tool",
+      "Targeting data"
+    ]
+  },
+  "mongoDB": {
+    "host": "localhost",
+    "port": 27017,
+    "dbName": "UTI",
+    "connectionOpt": {
+      "useNewUrlParser": true,
+      "useCreateIndex": true,
+      "useFindAndModify": false,
+      "autoIndex": false,
+      "reconnectInterval": 500,
+      "poolSize": 40,
+      "bufferMaxEntries": 0,
+      "connectTimeoutMS": 10000,
+      "socketTimeoutMS": 45000,
+      "reconnectTries": 30000,
+      "keepAlive": true,
+      "family": 4,
+      "auto_reconnect": true
+    }
+  }
+}

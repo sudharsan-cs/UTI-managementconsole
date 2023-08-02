@@ -1,0 +1,20 @@
+{
+  "tableData": {
+    "reconnaissance":[],
+    "resource-development": [],
+    "initial-access": [],
+    "execution":[],
+    "persistence":[],
+    "privilege-escalation":[],
+    "defense-evasion":[],
+    "credential-access":[],
+    "discovery":[],
+    "lateral-movement":[],
+    "collection":[],
+    "command-and-control":[],
+    "exfiltration":[],
+    "impact":[]
+  },
+  "numberofRows":0,
+  "desc":{}
+}

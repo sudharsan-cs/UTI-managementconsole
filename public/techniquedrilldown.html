@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        font-family: Arial;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      div.example input[type="text"] {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 80%;
+        background: #f1f1f1;
+      }
+
+      div.example button {
+        float: left;
+        width: 20%;
+        padding: 10px;
+        background: #482683;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+      }
+
+      div.example button:hover {
+        background: #0b7dda;
+      }
+
+      div.example::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+      .select-container {
+        width: 100%;
+        margin: auto;
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .select-container + .select-container {
+        margin-top: 50px;
+      }
+
+      .select-label {
+        margin-right: 35px;
+        padding: 10px 0;
+        flex-grow: 1;
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 1;
+        text-align: right;
+      }
+
+      .select-domain {
+        background-color: #0066ff;
+      }
+
+      .select-category {
+        background-color: #944dff;
+      }
+
+      .select {
+        position: relative;
+        width: 400px;
+        border: 1px solid #ffffff;
+        border-radius: 6px;
+        color: #ffffff;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: inherit;
+        font-weight: 300;
+        cursor: pointer;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+
+      .select:disabled {
+        cursor: not-allowed;
+      }
+
+      .select:focus {
+        border: 1px solid #ff8630;
+        outline: none;
+      }
+
+      .select-wrapper {
+        position: relative;
+      }
+
+      .select-wrapper::after {
+        content: "";
+        position: absolute;
+        top: calc(50% - 4px);
+        right: 15px;
+        width: 14px;
+        height: 8px;
+        background-image: url("images/arrow-down.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100%;
+      }
+
+      option {
+        font-weight: inherit;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: inherit;
+      }
+
+      .select-single {
+        padding: 10px 15px;
+      }
+
+      .select-multi {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      table {
+        margin-top: 3%;
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+
+      .selectors {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      .records_table {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      .records_table td,
+      .records_table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+
+      .records_table tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      .records_table tr:hover {
+        background-color: #ddd;
+      }
+
+      .records_table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #482683;
+        color: white;
+      }
+
+      a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+
+      .previous {
+        background-color: #482683;
+        color: white;
+      }
+
+      .next {
+        background-color: #482683;
+        color: white;
+      }
+
+      .round {
+        border-radius: 50%;
+      }
+
+      a {
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 16px;
+      }
+      .overlay {
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        background: rgba(255, 255, 255, 0.8) url("loader.gif") center no-repeat;
+      }
+      /* Turn off scrollbar when body element has the loading class */
+      body.loading {
+        overflow: hidden;
+      }
+      /* Make spinner image visible when body element has the loading class */
+      body.loading .overlay {
+        display: block;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script>
+      $(document).on({
+        ajaxStart: function () {
+          $("body").addClass("loading");
+        },
+        ajaxStop: function () {
+          $("body").removeClass("loading");
+        },
+      });
+      const limit = 10;
+      var totatEventIds = [];
+      var page = 0;
+      var malwareQuery = null;
+      var nextPage = function () {
+        page = page + 1;
+        updateEventTable();
+      };
+
+      var previousPage = function () {
+        if (page !== 0) {
+          page = page - 1;
+          updateEventTable();
+        }
+      };
+      var searchData = function () {
+        page = 0;
+        malwareQuery = $("#searchbox").val();
+        updateEventTable();
+      };
+
+      var updateEventTable = function () {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+        $("#techTitle").text(`Technique - ${id}`);
+        $.ajax({
+          url: "https://localhost:3000/ms/technique/info/v1",
+          type: "POST",
+          data: {
+            techId: id,
+            malwareQuery: null,
+          },
+          success: function (response) {
+            var trHTML,
+              mitigationHtml,
+              detectionHtml = "";
+            $("#techDesc").text(response[0]["description"]);
+            $.each(response[0]["subTechniqueData"], function (i, item) {
+              trHTML +=
+                '<tr class="removeable event-row" event_id =' +
+                item.ID +
+                "><td>" +
+                item.ID +
+                "</td><td>" +
+                item.Name +
+                " </td>" +
+                "</tr>";
+            });
+            $(".removeable").remove();
+            if (response[0]["subTechniqueData"].length > 0) {
+              $("#sub_technique_records_table").append(trHTML);
+            }
+            $.each(response[0]["mitigationData"], function (i, item) {
+              mitigationHtml +=
+                '<tr class="removeable event-row" event_id =' +
+                item.ID +
+                "><td>" +
+                item.ID +
+                "</td><td>" +
+                item.Mitigation +
+                " </td>" +
+                "<td>" +
+                item.Description +
+                " </td>" +
+                "</tr>";
+            });
+            if (response[0]["mitigationData"].length > 0) {
+              $("#mitigation_records_table").append(mitigationHtml);
+            }
+            $.each(response[0]["detectionData"], function (i, item) {
+              detectionHtml +=
+                '<tr class="removeable event-row" event_id =' +
+                item.ID +
+                "><td>" +
+                item.ID +
+                "</td><td>" +
+                item.Detects +
+                " </td>" +
+                "<td>" +
+                item["Data Component"] +
+                " </td>" +
+                "</tr>";
+            });
+            if (response[0]["detectionData"].length > 0) {
+              $("#detections_records_table").append(detectionHtml);
+            }
+          },
+        });
+      };
+
+      $(document).ready(function () {
+        updateEventTable();
+        $("#nextTable").on("click", function () {
+          nextPage();
+        });
+        $("#previousTable").on("click", function () {
+          previousPage();
+        });
+        $("#search").on("click", function () {
+          searchData();
+        });
+        $(".pdf-download").on("click", function () {
+          const params = new URLSearchParams(window.location.search);
+          const id = params.get("id");
+          $.ajax({
+            url: "https://localhost:3000/ms/technique/download/v1",
+            type: "POST",
+            data: {
+              techId: id,
+              malwareQuery: null,
+            },
+            xhrFields: {
+              responseType: "blob",
+            },
+            success: function (response) {
+              var a = document.createElement("a");
+              var url = window.URL.createObjectURL(response);
+              a.href = url;
+              a.download = "Technique-Report.pdf";
+              document.body.append(a);
+              a.click();
+              a.remove();
+              window.URL.revokeObjectURL(url);
+            },
+          });
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div>
+      <h2 id="techTitle"></h2>
+      <button
+        class="select-wrapper"
+        style="position: relative; float: right; margin-top: -4%"
+      >
+        <a
+          href="#"
+          class="fa-solid fa-file-chart-column pdf-download"
+          event_id="+ item.id +"
+          >Download PDF</a
+        >
+      </button>
+    </div>
+
+    <p id="techDesc"></p>
+    <h3 id="Sub Technique">Sub Technique(s) -</h3>
+    <table
+      id="sub_technique_records_table"
+      class="records_table"
+      style="margin-top: 0%"
+    >
+      <tr>
+        <th style="width: 50%">ID</th>
+        <th style="width: 50%">Name</th>
+      </tr>
+    </table>
+
+    <h3 id="Mitigation">Mitigation(s) -</h3>
+    <table
+      id="mitigation_records_table"
+      class="records_table"
+      style="margin-top: 0%"
+    >
+      <tr>
+        <th style="width: 10%">ID</th>
+        <th style="width: 40%">Mitigation</th>
+        <th style="width: 50%">Description</th>
+      </tr>
+    </table>
+
+    <h3 id="Detections">Detections(s) -</h3>
+    <table
+      id="detections_records_table"
+      class="records_table"
+      style="margin-top: 0%"
+    >
+      <tr>
+        <th style="width: 10%">ID</th>
+        <th style="width: 40%">Detects</th>
+        <th style="width: 50%">Data Component</th>
+      </tr>
+    </table>
+  </body>
+</html>

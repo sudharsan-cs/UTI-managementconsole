@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dropdowns, Buttons, and Table</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- Material Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="css/event.css"/>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <label class="input-group-text">Domain</label>
+              </div>
+              <select class="custom-select" id="domainSelectorId" aria-label="Domain Selector">
+                <option value="Insurance" selected="selected">Insurance</option>
+                <option value="Finance">Finance</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <label class="input-group-text">Category</label>
+              </div>
+              <select class="custom-select" id="categorySelection" aria-label="Category Selector"></select>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <button class="btn btn-primary btn-block domain-selector-download" type="button">
+              <i class="material-icons">file_chart_column</i>
+              Executive Report
+            </button>
+          </div>
+          <div class="col-md-6">
+            <button class="btn btn-secondary btn-block summary-report-download summary-selector-download" type="button">
+              <i class="material-icons">file_chart_column</i>
+              Summary Report
+            </button>
+          </div>
+        </div>
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <table class="table table-bordered" id="records_table" border="1">
+            <tr style="background-color: #482683;color:#ffffff">
+              <th style="width: 6%">ID</th>
+              <th style="width: 9%">Org ID</th>
+              <th style="width: 10%">Date</th>
+              <th style="width: 10%">Threat Level ID</th>
+              <th>Info</th>
+              <th style="width: 10%">Attribute Count</th>
+              <th style="width: 10%">View Attribute</th>
+              <th style="width: 10%">Download Attribute</th>
+            </tr>
+          </table>
+      </div>
+    </div>
+    <div class="pagination-container">
+        <a href="#" id="previousTable" class="previous">&#8249;</a>
+        <a href="#" id="nextTable" class="next">&#8250;</a>
+      </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="scripts/events.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

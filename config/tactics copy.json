@@ -1,0 +1,43 @@
+{
+  "table1": {
+    "collection":[],
+    "collection|credential-access":[],
+    "command-and-control":[],
+    "credential-access":[],
+    "credential-access|collection":[],
+    "credential-access|defense-evasion|persistence":[],
+    "credential-access|discovery":[],
+    "defense-evasion":[],
+    "defense-evasion|discovery":[],
+    "defense-evasion|execution":[],
+    "defense-evasion|lateral-movement": []
+  },
+  "table2": {
+    "defense-evasion|persistence":[],
+    "defense-evasion|persistence|command-and-control":[],
+    "defense-evasion|persistence|privilege-escalation|initial-access":[],
+    "defense-evasion|privilege-escalation":[],
+    "discovery":[],
+    "execution":[],
+    "execution|lateral-movement":[],
+    "execution|persistence|privilege-escalation":[],
+    "exfiltration":[],
+    "impact":[],
+    "initial-access": []
+  },
+  "table3": {
+    "lateral-movement":[],
+    "lateral-movement|initial-access":[],
+    "persistence":[],
+    "persistence|initial-access":[],
+    "persistence|privilege-escalation":[],
+    "persistence|privilege-escalation|defense-evasion":[],
+    "privilege-escalation":[],
+    "privilege-escalation|defense-evasion":[],
+    "privilege-escalation|persistence":[],
+    "reconnaissance":[],
+    "resource-development": []
+  },
+  "numberofRows":0,
+  "desc":{}
+}
